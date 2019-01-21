@@ -118,14 +118,25 @@ class Protocol {
     if (toPacket) {
       toPacket.parse();
 
-      if (type === this.type.LOCAL) this.client.server.plugins.fireLocalHooks(this, toPacket);
-      else this.client.server.plugins.fireRemoteHooks(this, toPacket);
+      this.handle(type, toPacket);
+
+      if (type === this.type.LOCAL) this.client.server.plugins.fireLocalHooks(this.client, toPacket);
+      else this.client.server.plugins.fireRemoteHooks(this.client, toPacket);
 
       if (toPacket.send) {
         if (type === this.type.LOCAL) this.writeToRemote(toPacket);
         else this.writeToLocal(toPacket);
       }
     }
+  }
+
+  /**
+   * Regsiters a local handler
+   * @param {string|number} event Event type
+   * @param {Handler} handler Handler to regsiter
+   */
+  regsiterLocalHandler(event, handler) {
+    this.localHandlers[event] = new handler(this);
   }
 
   /**

@@ -60,7 +60,7 @@ const TEMPLATE = {
     },
   },
   settings: {
-    messageOfTheDay: '<font color="#FFFFFF">Welcome to Moon!</font>',
+    messageOfTheDay: 'Welcome to Moon!',
     prefix: '!',
   },
 };

@@ -122,7 +122,7 @@ class Client {
    * Sends command not found message to the client
    * @param {string} command Command that wasn't found
    */
-  commandNotFound(command) {
+  commandNotFound() {
     // Add `Command ${command} not found!` message here
   }
 

@@ -1,5 +1,5 @@
 class Player {
-  constructor(client, { username, token }) {
+  constructor(client, { id, username, token }) {
     /**
      * Client that instantiated this player
      * @type {Client}
@@ -8,11 +8,18 @@ class Player {
     this._client = client;
 
     /**
+     * Id that instantiated this player
+     * @type {number}
+     * @public
+     */
+    this.id = id;
+
+    /**
      * Username that instantiated this player
      * @type {string}
      * @public
      */
-    this.username = username;
+    this.username = username || null;
 
     /**
      * Token that instantiated this player
