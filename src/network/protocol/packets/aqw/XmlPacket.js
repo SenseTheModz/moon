@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const Packet = require('./');
+const Packet = require('../');
 
 class XmlPacket extends Packet {
   parse() {

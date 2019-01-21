@@ -1,4 +1,4 @@
-const Packet = require('./');
+const Packet = require('../');
 
 class JsonPacket extends Packet {
   parse() {

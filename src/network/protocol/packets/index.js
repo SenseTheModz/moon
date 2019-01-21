@@ -17,10 +17,18 @@ class Packet {
     this.send = true;
   }
 
+  /**
+   * Parses the packet
+   * @abstract
+   */
   parse() {
     throw new Error('Method not implemented.');
   }
 
+  /**
+   * Converts the packet to string
+   * @abstract
+   */
   toPacket() {
     throw new Error('Method not implemented.');
   }

@@ -1,4 +1,4 @@
-const Packet = require('./');
+const Packet = require('../');
 
 class XtPacket extends Packet {
   parse() {

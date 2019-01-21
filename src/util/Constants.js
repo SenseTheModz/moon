@@ -20,12 +20,12 @@ const CONNECTION_STATE = {
 };
 
 /**
- * Packet events
+ * Network protocol type
  * @enum
  */
-const PACKET_EVENTS = {
-  LOGIN: 'login',
-  LOGIN_RESPONSE: 'loginResponse',
+const PROTOCOL_TYPE = {
+  AQW: 'aqw',
+  AQ3D: 'aq3d',
 };
 
-module.exports = { PROCESS_EVENTS, CONNECTION_STATE, PACKET_EVENTS };
+module.exports = { PROCESS_EVENTS, CONNECTION_STATE, PROTOCOL_TYPE };

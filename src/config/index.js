@@ -47,9 +47,11 @@ const FULL_PATH = path.join(__dirname, '..', '..', 'config', 'config.json');
 const TEMPLATE = {
   web: {
     port: 80,
+    enabled: true,
   },
   server: {
     name: 'Moon',
+    protocol: 'aqw',
     port: 5588,
     debug: false,
     remote: {

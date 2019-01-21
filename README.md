@@ -5,7 +5,7 @@
   </p>
   <br />
   <p>
-    <b>Moon</b> is a plugin-based AdventureQuest Worlds Man-In-The-Middle proxy server.
+    <b>Moon</b> is a plugin-based <b>AdventureQuest Worlds</b> and <b>AdventureQuest 3D</b> Man-In-The-Middle proxy server.
   </p>
 </div>
 
