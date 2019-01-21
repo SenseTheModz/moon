@@ -118,8 +118,8 @@ class Protocol {
     if (toPacket) {
       toPacket.parse();
 
-      // If (type === this.type.LOCAL) this.client.server.plugins.fireLocalHooks(this, toPacket);
-      // else this.client.server.plugins.fireRemoteHooks(this, toPacket);
+      if (type === this.type.LOCAL) this.client.server.plugins.fireLocalHooks(this, toPacket);
+      else this.client.server.plugins.fireRemoteHooks(this, toPacket);
 
       if (toPacket.send) {
         if (type === this.type.LOCAL) this.writeToRemote(toPacket);

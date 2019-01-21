@@ -21,6 +21,13 @@ class Plugin {
     this.author = info.author;
 
     /**
+     * Plugin protocol type
+     * @type {string}
+     * @public
+     */
+    this.protocol = info.protocol || 'aqw';
+
+    /**
      * The plugin description
      * @type {string}
      * @public

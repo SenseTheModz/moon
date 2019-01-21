@@ -1,3 +1,4 @@
+const { ADVENTUREQUEST_3D_PACKETS, ADVENTUREQUEST_WORLDS_PACKETS } = require('../util/Constants');
 const logger = require('../logger');
 const Config = require('../config');
 const { isArray } = require('util');
@@ -92,8 +93,9 @@ class PluginManager {
     if (!(plugin instanceof Plugin)) throw new Error(`Invalid plugin object ${plugin}`);
 
     if (this.plugins.has(plugin.name)) throw new Error(`A plugin with the name ${plugin.name} already exists`);
-    this.plugins.set(plugin.name, plugin);
+    if (!PROTOCOL_TYPES.includes(plugin.protocol.toLowerCase())) throw new Error('Invalid protocol type');
 
+    if (plugin.protocol === this._server.protocol) this.plugins.set(plugin.name, plugin);
     if (plugin.commands.length) this._registerCommands(plugin.commands);
     if (plugin.hooks.length) this._registerHooks(plugin.hooks);
     plugin.initialize();
@@ -179,8 +181,8 @@ class PluginManager {
    * @param {Packet} packet Packet to fire
    */
   fireLocalHooks(client, packet) {
-    if (packet.type === 'message') {
-      const message = packet.object[5];
+    if (packet.type === ADVENTUREQUEST_WORLDS_PACKETS.MESSAGE || packet.type === ADVENTUREQUEST_3D_PACKETS.CHAT) {
+      const message = this._server.protocol === 'aqw' ? packet.object[5] : packet.object.msg;
 
       const { prefix } = Config.get('settings');
       if (message.startsWith(prefix)) {
@@ -222,11 +224,22 @@ class PluginManager {
 
 /**
  * Packet hook types
+ * @type {Array}
  * @constant
  */
 const PACKET_HOOK_TYPES = [
   'local',
   'remote',
+];
+
+/**
+ * Protocol types
+ * @type {Array}
+ * @constant
+ */
+const PROTOCOL_TYPES = [
+  'aq3d',
+  'aqw',
 ];
 
 module.exports = PluginManager;
