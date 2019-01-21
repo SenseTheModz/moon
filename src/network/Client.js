@@ -119,6 +119,14 @@ class Client {
   }
 
   /**
+   * Sends command not found message to the client
+   * @param {string} command Command that wasn't found
+   */
+  commandNotFound(command) {
+    // Add `Command ${command} not found!` message here
+  }
+
+  /**
    * Handles disconnection
    * @public
    */

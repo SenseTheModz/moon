@@ -198,7 +198,7 @@ class PluginManager {
           }
         }
 
-        if (!found) client.serverMessage('warning', `Command ${command} not found!`);
+        if (!found) client.commandNotFound(command);
         return;
       }
     }

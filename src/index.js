@@ -22,13 +22,16 @@ const process = new Process(path.join(__dirname, '.', 'Shard.js'));
 /**
  * Web server object
  */
-const { port } = Config.get('web');
+const { port, enabled } = Config.get('web');
 
 /**
  * Web server
  */
-Web(port)
-  .then(() => logger.info('Web Server Initialized...'))
-  .then(() => process.spawn())
+if (enabled) Web(port).then(() => logger.info('Web Server Initialized...'));
+
+/**
+ * Spawn process
+ */
+process.spawn()
   .then(() => logger.info('Sharding proxy server...'))
   .catch(error => logger.error(`Failed Initializing! Reason: ${error.message}`));
