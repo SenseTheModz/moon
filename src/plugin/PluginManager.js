@@ -81,6 +81,7 @@ class PluginManager {
 
     const plugins = this.constructor._read(pluginPath);
     for (const plugin of plugins) this._registerPlugin(require(plugin));
+    logger.info(`Loaded ${this.plugins.size} plugin(s)!`);
   }
 
   /**

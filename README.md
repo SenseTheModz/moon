@@ -41,6 +41,39 @@ yarn # install dependencies
 yarn start # starts the project
 ```
 
+Setting up the configuration file
+
+```bash
+  web: {
+    port: 80,
+    enabled: true,
+  },
+  server: {
+    name: 'Moon',
+    protocol: 'aqw',
+    port: 5588,
+    debug: false,
+    remote: {
+      host: '',
+      port: 5588,
+    },
+  },
+  settings: {
+    messageOfTheDay: 'Welcome to Moon!',
+    prefix: '!',
+  },
+```
+
+You will need to include the target server address and port before attempting to connect
+
+Setting up [Windows Hosts](https://gist.github.com/zenorocha/18b10a14b2deb214dc4ce43a2d2e2992) for AdventureQuest 3D use only
+
+```bash
+::1	server ip here
+```
+
+You can find AdventreQuest 3D's server addresses using their public [Windows Hosts](http://cdn.aq3d.com/api/game/serverlist)
+
 ### Contributing
 
 When contributing a feature or bug fix make sure to test and stylecheck your code.
