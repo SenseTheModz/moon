@@ -1,11 +1,22 @@
 const Server = require('./network/Server');
 const logger = require('./logger');
 const Config = require('./config');
+const Plugin = require('./plugin');
 
 /**
  * Config
  */
 Config.load();
+
+/**
+ * Global config
+ */
+global.Config = Config;
+
+/**
+ * Global plugin
+ */
+global.Plugin = Plugin;
 
 /**
  * Spawn

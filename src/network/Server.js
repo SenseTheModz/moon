@@ -4,7 +4,6 @@ const { PROCESS_EVENTS } = require('../util/Constants');
 const PluginManager = require('../plugin/PluginManager');
 const PromiseSocket = require('promise-socket');
 const logger = require('../logger');
-const Config = require('../config');
 const Client = require('./Client');
 
 class TCPServer extends EventEmitter {

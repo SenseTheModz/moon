@@ -74,7 +74,12 @@ const ADVENTUREQUEST_3D_PACKETS = {
  * @enum
  */
 const ADVENTUREQUEST_WORLDS_PACKETS = {
+  LOGIN: 'login',
   MESSAGE: 'message',
+  MOVE_TO_AREA: 'moveToArea',
+  UOTLS: 'uotls',
+  EXIT_AREA: 'exitArea',
+  LOGIN_RESPONSE: 'loginResponse',
 };
 
 module.exports = { PROCESS_EVENTS, CONNECTION_STATE, PROTOCOL_TYPE, ADVENTUREQUEST_3D_PACKETS,

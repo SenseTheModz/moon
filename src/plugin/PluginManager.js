@@ -1,6 +1,5 @@
 const { ADVENTUREQUEST_3D_PACKETS, ADVENTUREQUEST_WORLDS_PACKETS } = require('../util/Constants');
 const logger = require('../logger');
-const Config = require('../config');
 const { isArray } = require('util');
 const fse = require('fs-extra');
 const path = require('path');

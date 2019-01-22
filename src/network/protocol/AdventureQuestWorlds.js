@@ -1,4 +1,4 @@
-const { CONNECTION_STATE } = require('../../util/Constants');
+const { CONNECTION_STATE, ADVENTUREQUEST_WORLDS_PACKETS } = require('../../util/Constants');
 const JsonPacket = require('./packets/aqw/JsonPacket');
 const XmlPacket = require('./packets/aqw/XmlPacket');
 const XtPacket = require('./packets/aqw/XtPacket');
@@ -12,14 +12,16 @@ class AdventureQuest3D extends Protocol {
     /**
      * Local handlers
      */
-    this.regsiterLocalHandler('login', require('./handlers/aqw/local/Login'));
+    this.regsiterLocalHandler(ADVENTUREQUEST_WORLDS_PACKETS.LOGIN, require('./handlers/aqw/local/Login'));
 
     /**
      * Remote handlers
      */
-    this.regsiterRemoteHandler('moveToArea', require('./handlers/aqw/remote/MoveToArea'));
-    this.regsiterRemoteHandler('uotls', require('./handlers/aqw/remote/Uotls'));
-    this.regsiterRemoteHandler('exitArea', require('./handlers/aqw/remote/ExitArea'));
+    this.regsiterRemoteHandler(ADVENTUREQUEST_WORLDS_PACKETS.LOGIN_RESPONSE,
+      require('./handlers/aqw/remote/LoginResponse'));
+    this.regsiterRemoteHandler(ADVENTUREQUEST_WORLDS_PACKETS.MOVE_TO_AREA, require('./handlers/aqw/remote/MoveToArea'));
+    this.regsiterRemoteHandler(ADVENTUREQUEST_WORLDS_PACKETS.UOTLS, require('./handlers/aqw/remote/Uotls'));
+    this.regsiterRemoteHandler(ADVENTUREQUEST_WORLDS_PACKETS.EXIT_AREA, require('./handlers/aqw/remote/ExitArea'));
   }
 
   /**

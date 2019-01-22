@@ -10,6 +10,10 @@
   "overrides": [
     { "files": ["*.browser.js"], "env": { "browser": true } }
   ],
+  "globals": {
+    "Config": true,
+    "Plugin": true
+  },
   "rules": {
     "no-await-in-loop": "warn",
     "no-compare-neg-zero": "error",

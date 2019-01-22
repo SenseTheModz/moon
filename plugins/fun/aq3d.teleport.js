@@ -1,5 +1,3 @@
-const Plugin = require('../../src/plugin');
-
 class Teleport extends Plugin {
   constructor(server) {
     super(server, {
