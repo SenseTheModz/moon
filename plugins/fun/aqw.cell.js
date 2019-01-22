@@ -28,8 +28,8 @@ class Cell extends Plugin {
    * @public
    */
   async moveToCell(client, frame = 'Enter', pad = 'Spawn') {
-    await this._client.writeToRemote(`%xt%zm%moveToCell%-1%${frame}%${pad}%`);
-    return this._client.writeToLocal(`%xt%gtc%-1%${frame}%${pad}%`);
+    await client.remoteWrite(`%xt%zm%moveToCell%-1%${frame}%${pad}%`);
+    return client.localWrite(`%xt%gtc%-1%${frame}%${pad}%`);
   }
 }
 
