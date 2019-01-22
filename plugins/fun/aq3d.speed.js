@@ -20,7 +20,7 @@ class Speed extends Plugin {
   }
 
   /**
-   * Sets your player speed
+   * Sets your player movement speed
    * @param {Client} client Client instance
    * @param {number} speed Speed of player movement
    * @returns {Promise<void>}
