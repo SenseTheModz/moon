@@ -140,6 +140,15 @@ class Protocol {
   }
 
   /**
+   * Regsiters a remote handler
+   * @param {string|number} event Event type
+   * @param {Handler} handler Handler to regsiter
+   */
+  regsiterRemoteHandler(event, handler) {
+    this.remoteHandlers[event] = new handler(this);
+  }
+
+  /**
    * Writes to the remote connection
    * @param {any} packet Packet to write
    * @abstract

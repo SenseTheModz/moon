@@ -1,3 +1,5 @@
+const Room = require('./Room');
+
 class Player {
   constructor(client, { id, username, token }) {
     /**
@@ -27,6 +29,13 @@ class Player {
      * @public
      */
     this.token = token;
+
+    /**
+     * Player room
+     * @type {Room}
+     * @public
+     */
+    this.room = new Room();
   }
 }
 

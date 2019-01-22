@@ -6,6 +6,13 @@ class Handler {
      * @protected
      */
     this.manager = manager;
+
+    /**
+     * Client instance
+     * @type {Client}
+     * @protected
+     */
+    this.client = manager.client;
   }
 
   handle() {
