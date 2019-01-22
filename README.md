@@ -72,6 +72,8 @@ Setting up [Windows Hosts](https://gist.github.com/zenorocha/18b10a14b2deb214dc4
 ::1	server ip here
 ```
 
+If you are using **Moon** for AdventureQuest Worlds only and have completed the following steps, you can play via [localhost](http://localhost)
+
 You can find AdventreQuest 3D's server addresses using their public [API](http://cdn.aq3d.com/api/game/serverlist)
 
 ### Contributing
