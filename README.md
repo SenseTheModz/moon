@@ -72,7 +72,7 @@ Setting up [Windows Hosts](https://gist.github.com/zenorocha/18b10a14b2deb214dc4
 ::1	server ip here
 ```
 
-You can find AdventreQuest 3D's server addresses using their public [Windows Hosts](http://cdn.aq3d.com/api/game/serverlist)
+You can find AdventreQuest 3D's server addresses using their public [API](http://cdn.aq3d.com/api/game/serverlist)
 
 ### Contributing
 
