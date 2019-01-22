@@ -5,7 +5,6 @@ class Cell extends Plugin {
     super(server, {
       name: 'cell',
       author: 'spirtik',
-      enabled: true,
       commands: [
         {
           name: 'cell',
