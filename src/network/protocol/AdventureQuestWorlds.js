@@ -6,6 +6,22 @@ const Packet = require('./packets');
 const Protocol = require('./');
 
 class AdventureQuest3D extends Protocol {
+  constructor(client) {
+    super(client);
+
+    /**
+     * Local handlers
+     */
+    this.regsiterLocalHandler('login', require('./handlers/aqw/local/Login'));
+
+    /**
+     * Remote handlers
+     */
+    this.regsiterRemoteHandler('moveToArea', require('./handlers/aqw/remote/MoveToArea'));
+    this.regsiterRemoteHandler('uotls', require('./handlers/aqw/remote/Uotls'));
+    this.regsiterRemoteHandler('exitArea', require('./handlers/aqw/remote/ExitArea'));
+  }
+
   /**
    * Constructs the local packet
    * @param {string} packet Packet to construct
