@@ -80,6 +80,7 @@ const ADVENTUREQUEST_WORLDS_PACKETS = {
   UOTLS: 'uotls',
   EXIT_AREA: 'exitArea',
   LOGIN_RESPONSE: 'loginResponse',
+  CHAT: 'chatm',
 };
 
 module.exports = { PROCESS_EVENTS, CONNECTION_STATE, PROTOCOL_TYPE, ADVENTUREQUEST_3D_PACKETS,

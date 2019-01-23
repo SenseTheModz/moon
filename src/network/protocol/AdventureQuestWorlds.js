@@ -5,7 +5,7 @@ const XtPacket = require('./packets/aqw/XtPacket');
 const Packet = require('./packets');
 const Protocol = require('./');
 
-class AdventureQuest3D extends Protocol {
+class AdventureQuestWorlds extends Protocol {
   constructor(client) {
     super(client);
 
@@ -92,4 +92,4 @@ class AdventureQuest3D extends Protocol {
   }
 }
 
-module.exports = AdventureQuest3D;
+module.exports = AdventureQuestWorlds;
