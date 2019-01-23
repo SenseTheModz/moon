@@ -96,7 +96,7 @@ class PluginManager {
     if (!PROTOCOL_TYPES.includes(plugin.protocol.toLowerCase())) throw new Error('Invalid protocol type');
 
     if (plugin.protocol === this._server.protocol) this.plugins.set(plugin.name, plugin);
-    if (plugin.commands.length) this._registerCommands(plugin.commands);
+    if (plugin.commands.length && plugin.protocol === this._server.protocol) this._registerCommands(plugin.commands);
     if (plugin.hooks.length) this._registerHooks(plugin.hooks);
     plugin.initialize();
   }

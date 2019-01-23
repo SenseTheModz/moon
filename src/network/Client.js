@@ -121,9 +121,37 @@ class Client {
   /**
    * Sends command not found message to the client
    * @param {string} command Command that wasn't found
+   * @returns {Promise<void>}
    */
-  commandNotFound() {
-    // Add `Command ${command} not found!` message here
+  commandNotFound(command) {
+    return this.serverWarningMessage(`Command ${command} not found!`);
+  }
+
+  /**
+   * Sends a server warning message
+   * @param {string} message Message to send
+   * @returns {Promise<void>}
+   */
+  serverWarningMessage(message) {
+    if (this.server.protocol === PROTOCOL_TYPE.AQW) {
+      return this.localWrite(`%xt%warning%-1%${message}%`);
+    } else {
+      return this.localWrite({ sender: 'SERVER', msg: `[FF0000][Warning][-] [D3D3D3]${message}[-]`, type: 4, cmd: 1 });
+    }
+  }
+
+
+  /**
+   * Sends a server message
+   * @param {string} message Message to send
+   * @returns {Promise<void>}
+   */
+  serverMessage(message) {
+    if (this.server.protocol === PROTOCOL_TYPE.AQW) {
+      return this.localWrite(`%xt%server%-1%${message}%`);
+    } else {
+      return this.localWrite({ sender: 'SERVER', msg: `[59f7f9][Server][-] [D3D3D3]${message}[-]`, type: 4, cmd: 1 });
+    }
   }
 
   /**
