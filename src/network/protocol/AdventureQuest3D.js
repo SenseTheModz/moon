@@ -1,7 +1,6 @@
-const { CONNECTION_STATE, ADVENTUREQUEST_3D_PACKETS } = require('../../util/Constants');
+const { ADVENTUREQUEST_3D_PACKETS } = require('../../util/Constants');
 const xor = require('../encryption/Xor');
 const JsonPacket = require('./packets/aq3d/JsonPacket');
-const Packet = require('./packets');
 const Protocol = require('./');
 
 class AdventureQuest3D extends Protocol {
@@ -31,6 +30,7 @@ class AdventureQuest3D extends Protocol {
     return new JsonPacket(packet);
   }
 
+
   /**
    * Called on incoming/outgoing packet
    * @param {number} type Packet type
@@ -40,48 +40,6 @@ class AdventureQuest3D extends Protocol {
   onPacket(type, packet) {
     packet = xor(packet).toString();
     this.parseAndFire(type, packet);
-  }
-
-  /**
-   * Writes to the remote connection
-   * @param {any} packet Packet to write
-   * @returns {Promise<void>}
-   * @public
-   */
-  async writeToRemote(packet) {
-    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
-      try {
-        const toPacket = packet instanceof Packet ? packet.toPacket() : JSON.stringify(packet);
-        if (this.client.server.debug) this.logger.info(`[Client] ${toPacket}`, { server: this.client.server.name });
-
-        const bufferPacket = this._toBufferPacket(toPacket, packet.type, packet.cmd);
-        this.client.remote.write(bufferPacket);
-        await this.client.remote.write('\x00');
-      } catch (error) {
-        this.logger.error(`Remote send failed! Reason: ${error.message}`, { server: this.client.server.name });
-      }
-    }
-  }
-
-  /**
-   * Sends the packet to the server
-   * @param {Packet} packet Packet to send
-   * @returns {Promise<void>}
-   * @public
-   */
-  async writeToLocal(packet) {
-    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
-      try {
-        const toPacket = packet instanceof Packet ? packet.toPacket() : JSON.stringify(packet);
-        if (this.client.server.debug) this.logger.info(`[Remote] ${toPacket}`, { server: this.client.server.name });
-
-        const bufferPacket = this._toBufferPacket(toPacket, packet.type, packet.cmd);
-        this.client.socket.write(bufferPacket);
-        await this.client.socket.write('\x00');
-      } catch (error) {
-        this.logger.error(`Local send failed! Reason: ${error.message}`, { server: this.client.server.name });
-      }
-    }
   }
 
   /**

@@ -1,4 +1,6 @@
+const { CONNECTION_STATE, PROTOCOL_TYPE } = require('../../util/Constants');
 const Delimiter = require('../delimiter');
+const Packet = require('./packets');
 
 class Protocol {
   constructor(client) {
@@ -91,6 +93,53 @@ class Protocol {
     }
   }
 
+
+  /**
+   * Sends the packet to the server
+   * @param {Packet} packet Packet to send
+   * @returns {Promise<void>}
+   * @public
+   */
+  async writeToRemote(packet) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
+      try {
+        let toPacket = packet instanceof Packet ? packet.toPacket() : packet;
+        if (typeof toPacket === 'object') toPacket = JSON.stringify(toPacket);
+        if (this.client.server.debug) this.logger.info(`[Client] ${toPacket}`, { server: this.client.server.name });
+
+        // eslint-disable-next-line max-len
+        if (this.client.server.protocol === PROTOCOL_TYPE.AQ3D) toPacket = this._toBufferPacket(toPacket, packet.type, packet.cmd);
+        this.client.remote.write(toPacket);
+        await this.client.remote.write('\x00');
+      } catch (error) {
+        this.logger.error(`Remote send failed! Reason: ${error.message}`, { server: this.client.server.name });
+      }
+    }
+  }
+
+  /**
+   * Sends the packet to the server
+   * @param {Packet} packet Packet to send
+   * @returns {Promise<void>}
+   * @public
+   */
+  async writeToLocal(packet) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
+      try {
+        let toPacket = packet instanceof Packet ? packet.toPacket() : packet;
+        if (typeof toPacket === 'object') toPacket = JSON.stringify(toPacket);
+        if (this.client.server.debug) this.logger.info(`[Remote] ${toPacket}`, { server: this.client.server.name });
+
+        // eslint-disable-next-line max-len
+        if (this.client.server.protocol === PROTOCOL_TYPE.AQ3D) toPacket = this._toBufferPacket(toPacket, packet.type, packet.cmd);
+        this.client.socket.write(toPacket);
+        await this.client.socket.write('\x00');
+      } catch (error) {
+        this.logger.error(`Local send failed! Reason: ${error.message}`, { server: this.client.server.name });
+      }
+    }
+  }
+
   /**
    * Handles incoming  packets and fires the events
    * @param {number} type Incoming/outgoing type
@@ -130,24 +179,6 @@ class Protocol {
    */
   regsiterRemoteHandler(event, handler) {
     this.remoteHandlers[event] = new handler(this);
-  }
-
-  /**
-   * Writes to the remote connection
-   * @param {any} packet Packet to write
-   * @abstract
-   */
-  writeToRemote() {
-    throw new Error('Method not implemented.');
-  }
-
-  /**
-   * Writes to the local connection
-   * @param {any} packet Packet to write
-   * @abstract
-   */
-  writeToLocal() {
-    throw new Error('Method not implemented.');
   }
 
   /**
