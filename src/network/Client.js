@@ -82,7 +82,7 @@ class Client {
       this.connectionState = CONNECTION_STATE.CONNECTED;
 
       this._init();
-      this.remote.stream.on('data', data => this.protocol.remoteDelimiter.chuck(data));
+      this.remote.stream.on('data', data => this.protocol.remoteDelimiter.chuck(this.protocol.type.REMOTE, data));
       this.remote.stream.once('close', () => this.disconnect());
     } catch (error) {
       this.server.logger.error(`Failed connecting to the remote host.. Reason: ${error.message}`);
@@ -94,7 +94,7 @@ class Client {
    * @private
    */
   _init() {
-    this.socket.stream.on('data', data => this.protocol.localDelimiter.chuck(data));
+    this.socket.stream.on('data', data => this.protocol.localDelimiter.chuck(this.protocol.type.LOCAL, data));
     this.socket.stream.once('close', () => this.disconnect());
   }
 
@@ -105,7 +105,7 @@ class Client {
    * @public
    */
   remoteWrite(packet) {
-    return this.protocol.writeToRemote(packet);
+    return this.protocol.remote(packet);
   }
 
   /**
@@ -115,7 +115,7 @@ class Client {
    * @public
    */
   localWrite(packet) {
-    return this.protocol.writeToLocal(packet);
+    return this.protocol.local(packet);
   }
 
   /**

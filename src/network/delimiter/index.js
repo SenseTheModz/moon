@@ -1,8 +1,11 @@
-const { EventEmitter } = require('events');
-
-class Delimiter extends EventEmitter {
-  constructor() {
-    super();
+class Delimiter {
+  constructor(protocol) {
+    /**
+     * Protocol that instantiated this delimiter
+     * @type {Client}
+     * @private
+     */
+    this._protocol = protocol;
 
     /**
      * Packet buffer
@@ -14,23 +17,25 @@ class Delimiter extends EventEmitter {
 
   /**
    * Adds chuck of the packet data to the buffer
+   * @param {number} type packet type
    * @param {string} data packet data
    * @private
    */
-  chuck(data) {
+  chuck(type, data) {
     this._buffer += data;
-    this._next();
+    this._next(type);
   }
 
   /**
    * Handles the queue
+   * @param {number} type packet type
    * @private
    */
-  _next() {
+  _next(type) {
     if (this._buffer[this._buffer.length - 1] === NULLDELIMITER) {
       const packets = this._buffer.split(NULLDELIMITER);
 
-      for (let i = 0; i < packets.length - 1; i++) this.emit('packet', packets[i]);
+      for (let i = 0; i < packets.length - 1; i++) this._protocol.onPacket(type, packets[i]);
       this._buffer = '';
     }
   }

@@ -1,7 +1,8 @@
-const { ADVENTUREQUEST_WORLDS_PACKETS } = require('../../util/Constants');
+const { CONNECTION_STATE, ADVENTUREQUEST_WORLDS_PACKETS } = require('../../util/Constants');
 const JsonPacket = require('./packets/aqw/JsonPacket');
 const XmlPacket = require('./packets/aqw/XmlPacket');
 const XtPacket = require('./packets/aqw/XtPacket');
+const Packet = require('./packets');
 const Protocol = require('./');
 
 class AdventureQuestWorlds extends Protocol {
@@ -41,6 +42,56 @@ class AdventureQuestWorlds extends Protocol {
   }
 
   /**
+   * Called on incoming/outgoing packet
+   * @param {number} type Packet type
+   * @param {string} packet Packet to handle
+   * @public
+   */
+  onPacket(type, packet) {
+    this.parseAndFire(type, packet);
+  }
+
+  /**
+   * Sends the packet to the server
+   * @param {Packet} packet Packet to send
+   * @returns {Promise<void>}
+   * @public
+   */
+  async remote(packet) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
+      try {
+        let toPacket = packet instanceof Packet ? packet.toPacket() : packet;
+        if (typeof toPacket === 'object') toPacket = JSON.stringify(toPacket);
+
+        if (this.client.server.debug) this.logger.info(`[Client] ${toPacket}`, { server: this.client.server.name });
+        await this.client.remote.write(`${toPacket}\x00`);
+      } catch (error) {
+        this.logger.error(`Remote send failed! Reason: ${error.message}`, { server: this.client.server.name });
+      }
+    }
+  }
+
+  /**
+   * Sends the packet to the server
+   * @param {Packet} packet Packet to send
+   * @returns {Promise<void>}
+   * @public
+   */
+  async local(packet) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
+      try {
+        let toPacket = packet instanceof Packet ? packet.toPacket() : packet;
+        if (typeof toPacket === 'object') toPacket = JSON.stringify(toPacket);
+
+        if (this.client.server.debug) this.logger.info(`[Remote] ${toPacket}`, { server: this.client.server.name });
+        await this.client.socket.write(`${toPacket}\x00`);
+      } catch (error) {
+        this.logger.error(`Local send failed! Reason: ${error.message}`, { server: this.client.server.name });
+      }
+    }
+  }
+
+  /**
    * Checks the packet type
    * @param {string} packet Packet to check
    * @returns {number}
@@ -54,16 +105,6 @@ class AdventureQuestWorlds extends Protocol {
     if (firstCharacter === '%' && lastCharacter === '%') return this.packetType.XT;
     if (firstCharacter === '{' && lastCharacter === '}') return this.packetType.JSON;
     return this.packetType.UNDEFINED;
-  }
-
-  /**
-   * Called on incoming/outgoing packet
-   * @param {number} type Packet type
-   * @param {string} packet Packet to handle
-   * @public
-   */
-  onPacket(type, packet) {
-    this.parseAndFire(type, packet);
   }
 }
 
