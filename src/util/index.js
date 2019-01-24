@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const notifier = require('node-notifier');
 const { version } = require('../../package.json');
 
 class Util {
@@ -29,6 +30,15 @@ class Util {
     return value &&
     typeof value.then === 'function' &&
     typeof value.catch === 'function';
+  }
+
+  /**
+   * Desktop notifcation
+   * @param {Object} options Notify options
+   * @returns {NodeNotifier}
+   */
+  static notify(options = {}) {
+    return notifier.notify(options);
   }
 }
 

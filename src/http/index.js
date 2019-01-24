@@ -1,5 +1,4 @@
 const superagent = require('superagent');
-const LoginResponse = require('./responses/Login');
 
 class Http {
   constructor() {
@@ -7,36 +6,32 @@ class Http {
   }
 
   /**
-   * Host endpoint
-   * @type {string}
-   * @readonly
-   * @static
-   */
-  static get baseUrl() {
-    return 'https://game.aq.com';
-  }
-
-  /**
    * Reverse proxies AdventureQuest Worlds
-   * @param {string} path Address path
+   * @param {string} url Address path
    * @returns {Promise<request>}
    * @static
    */
-  static proxy(path) {
-    return superagent.get(`${this.baseUrl}/${path}`)
+  static proxy(url) {
+    return superagent.get(url)
       .buffer(true);
   }
 
   /**
-   * Attempts to authenticate the account
-   * @param {Object} credentials Account login credentials
+   * Makes a HTTP get request
+   * @param {string} url Website address
    * @returns {Promise<request>}
    */
-  static login(credentials) {
-    return superagent.post(`${this.baseUrl}/game/cf-userlogin.asp`)
-      .type('form')
-      .send(credentials)
-      .then(LoginResponse);
+  static get(url) {
+    return superagent.get(url);
+  }
+
+  /**
+   * Makes a HTTP post request
+   * @param {string} url Website address
+   * @returns {Promise<request>}
+   */
+  static post(url) {
+    return superagent.post(url);
   }
 }
 

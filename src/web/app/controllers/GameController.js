@@ -1,6 +1,17 @@
+const LoginResponse = require('../../../http/responses/Login');
 const Http = require('../../../http');
 
 class GameController {
+  /**
+   * Host endpoint
+   * @type {string}
+   * @readonly
+   * @static
+   */
+  static get baseUrl() {
+    return 'https://game.aq.com';
+  }
+
   /**
    * Renders AdventureQuest Worlds
    * @param {Object} request Http request
@@ -9,7 +20,7 @@ class GameController {
    * @public
    */
   index(request, response) {
-    return Http.proxy(request.path).pipe(response);
+    return Http.proxy(`${this.baseUrl}/${request.path}`).pipe(response);
   }
 
   /**
@@ -36,8 +47,12 @@ class GameController {
     };
 
     try {
-      const login = await Http.login(credentials);
-      return response.status(200).send(login);
+      const login = await Http.post(this.baseUrl)
+        .type('form')
+        .send(credentials);
+
+      const loginResponse = LoginResponse(login);
+      return response.status(200).send(loginResponse);
     } catch (error) {
       return response.status(200).send(error.message);
     }
