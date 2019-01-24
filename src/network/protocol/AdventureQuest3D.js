@@ -41,22 +41,6 @@ class AdventureQuest3D extends Protocol {
     packet = xor(packet).toString();
     this.parseAndFire(type, packet);
   }
-
-  /**
-   * Creates a packet buffer and encodes the packet
-   * @param {any} packet Packet to buffer
-   * @param {number} type Packet type
-   * @param {number} cmd Packet command
-   * @returns {Buffer}
-   */
-  _toBufferPacket(packet, type = 255, cmd = 255) {
-    packet = Buffer.from(packet);
-    const array = Buffer.alloc(packet.length + 2);
-    array[0] = type;
-    array[1] = cmd;
-    packet.copy(array, 2);
-    return xor(array);
-  }
 }
 
 module.exports = AdventureQuest3D;

@@ -1,4 +1,5 @@
 const { CONNECTION_STATE, PROTOCOL_TYPE } = require('../../util/Constants');
+const xor = require('../encryption/Xor');
 const Delimiter = require('../delimiter');
 const Packet = require('./packets');
 
@@ -161,6 +162,23 @@ class Protocol {
         else this.writeToLocal(toPacket);
       }
     }
+  }
+
+  /**
+   * Creates a packet buffer and encodes the packet
+   * @param {any} packet Packet to buffer
+   * @param {number} type Packet type
+   * @param {number} cmd Packet command
+   * @returns {Buffer}
+   * @private
+   */
+  _toBufferPacket(packet, type = 255, cmd = 255) {
+    packet = Buffer.from(packet);
+    const array = Buffer.alloc(packet.length + 2);
+    array[0] = type;
+    array[1] = cmd;
+    packet.copy(array, 2);
+    return xor(array);
   }
 
   /**
