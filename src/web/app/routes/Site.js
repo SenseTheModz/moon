@@ -19,6 +19,6 @@ router.get('/', GameController.play);
  * Game routes
  */
 router.get('/game*', (request, response) => GameController.index(request, response));
-router.post('/game/login', GameController.authenticate);
+router.post('/game/login', (request, response) => GameController.authenticate(request, response));
 
 module.exports = router;

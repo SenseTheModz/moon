@@ -47,7 +47,7 @@ class GameController {
     };
 
     try {
-      const login = await Http.post(this.baseUrl)
+      const login = await Http.post(`${this.baseUrl}/game/cf-userlogin.asp`)
         .type('form')
         .send(credentials);
 
