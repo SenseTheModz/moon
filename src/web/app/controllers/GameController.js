@@ -8,7 +8,7 @@ class GameController {
    * @readonly
    * @static
    */
-  static get baseUrl() {
+  get baseUrl() {
     return 'https://game.aq.com';
   }
 
