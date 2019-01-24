@@ -186,13 +186,14 @@ class PluginManager {
 
       const { prefix } = Config.get('settings');
       if (message.startsWith(prefix)) {
+        packet.send = false;
+
         const parameters = message.split(' ');
         const command = parameters.shift().substr(1);
+        if (!command) return;
+
         let found = false;
-
         for (const [cmd, value] of this.commands) {
-          packet.send = false;
-
           if (cmd === command) {
             value.execute({ client, packet, parameters });
             found = true;

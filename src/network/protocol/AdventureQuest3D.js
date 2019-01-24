@@ -49,7 +49,7 @@ class AdventureQuest3D extends Protocol {
    * @public
    */
   async writeToRemote(packet) {
-    if (this.client.state === CONNECTION_STATE.CONNECTED) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
       try {
         const toPacket = packet instanceof Packet ? packet.toPacket() : JSON.stringify(packet);
         if (this.client.server.debug) this.logger.info(`[Client] ${toPacket}`, { server: this.client.server.name });
@@ -70,7 +70,7 @@ class AdventureQuest3D extends Protocol {
    * @public
    */
   async writeToLocal(packet) {
-    if (this.client.state === CONNECTION_STATE.CONNECTED) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
       try {
         const toPacket = packet instanceof Packet ? packet.toPacket() : JSON.stringify(packet);
         if (this.client.server.debug) this.logger.info(`[Remote] ${toPacket}`, { server: this.client.server.name });

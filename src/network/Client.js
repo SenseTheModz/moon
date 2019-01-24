@@ -34,7 +34,7 @@ class Client {
      * @type {number}
      * @public
      */
-    this.state = CONNECTION_STATE.IDLE;
+    this.connectionState = CONNECTION_STATE.IDLE;
 
     /**
      * Network protocol
@@ -79,7 +79,7 @@ class Client {
 
       const { host, port } = this.server.remote;
       await this.remote.connect({ host, port });
-      this.state = CONNECTION_STATE.CONNECTED;
+      this.connectionState = CONNECTION_STATE.CONNECTED;
 
       this._init();
       this.remote.stream.on('data', data => this.protocol.remoteDelimiter.chuck(data));
@@ -122,6 +122,7 @@ class Client {
    * Sends command not found message to the client
    * @param {string} command Command that wasn't found
    * @returns {Promise<void>}
+   * @public
    */
   commandNotFound(command) {
     return this.serverWarningMessage(`Command ${command} not found!`);
@@ -131,6 +132,7 @@ class Client {
    * Sends a server warning message
    * @param {string} message Message to send
    * @returns {Promise<void>}
+   * @public
    */
   serverWarningMessage(message) {
     if (this.server.protocol === PROTOCOL_TYPE.AQW) {
@@ -145,6 +147,7 @@ class Client {
    * Sends a server message
    * @param {string} message Message to send
    * @returns {Promise<void>}
+   * @public
    */
   serverMessage(message) {
     if (this.server.protocol === PROTOCOL_TYPE.AQW) {
@@ -159,8 +162,8 @@ class Client {
    * @public
    */
   async disconnect() {
-    if (this.state === CONNECTION_STATE.CONNECTED) {
-      this.state = CONNECTION_STATE.DISCONNECTED;
+    if (this.connectionState === CONNECTION_STATE.CONNECTED) {
+      this.connectionState = CONNECTION_STATE.DISCONNECTED;
       await this.remote.end();
       await this.socket.end();
       await this._destroy();
@@ -170,11 +173,12 @@ class Client {
 
   /**
    * Distorys the sockets
+   * @returns {Promise<void>}
    * @private
    */
   async _destroy() {
     await this.remote.destroy();
-    await this.socket.destroy();
+    return this.socket.destroy();
   }
 }
 

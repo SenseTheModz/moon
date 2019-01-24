@@ -19,6 +19,17 @@ class Util {
       '',
     ].join('\n')), `\n\t ${chalk.whiteBright(`Version v${version}`)}\n`);
   }
+
+  /**
+   * Check if a function is a promise
+   * @param {Function} value Function to check
+   * @returns {boolean}
+   */
+  static isPromise(value) {
+    return value &&
+    typeof value.then === 'function' &&
+    typeof value.catch === 'function';
+  }
 }
 
 module.exports = Util;

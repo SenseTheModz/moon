@@ -31,7 +31,7 @@ class AdventureQuestWorlds extends Protocol {
    * @public
    */
   constructPacket(packet) {
-    const type = this.check(packet);
+    const type = this._check(packet);
 
     switch (type) {
       case this.packetType.XML: return new XmlPacket(packet);
@@ -51,6 +51,23 @@ class AdventureQuestWorlds extends Protocol {
     this.parseAndFire(type, packet);
   }
 
+
+  /**
+   * Checks the packet type
+   * @param {string} packet Packet to check
+   * @returns {number}
+   * @private
+   */
+  _check(packet) {
+    const firstCharacter = packet[0];
+    const lastCharacter = packet[packet.length - 1];
+
+    if (firstCharacter === '<' && lastCharacter === '>') return this.packetType.XML;
+    if (firstCharacter === '%' && lastCharacter === '%') return this.packetType.XT;
+    if (firstCharacter === '{' && lastCharacter === '}') return this.packetType.JSON;
+    return this.packetType.UNDEFINED;
+  }
+
   /**
    * Sends the packet to the server
    * @param {Packet} packet Packet to send
@@ -58,7 +75,7 @@ class AdventureQuestWorlds extends Protocol {
    * @public
    */
   async writeToRemote(packet) {
-    if (this.client.state === CONNECTION_STATE.CONNECTED) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
       try {
         let toPacket = packet instanceof Packet ? packet.toPacket() : packet;
         if (typeof toPacket === 'object') toPacket = JSON.stringify(toPacket);
@@ -78,7 +95,7 @@ class AdventureQuestWorlds extends Protocol {
    * @public
    */
   async writeToLocal(packet) {
-    if (this.client.state === CONNECTION_STATE.CONNECTED) {
+    if (this.client.connectionState === CONNECTION_STATE.CONNECTED) {
       try {
         let toPacket = packet instanceof Packet ? packet.toPacket() : packet;
         if (typeof toPacket === 'object') toPacket = JSON.stringify(toPacket);

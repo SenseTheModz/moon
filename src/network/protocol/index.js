@@ -92,22 +92,6 @@ class Protocol {
   }
 
   /**
-   * Checks the packet type
-   * @param {string} packet Packet to check
-   * @returns {number}
-   * @public
-   */
-  check(packet) {
-    const firstCharacter = packet[0];
-    const lastCharacter = packet[packet.length - 1];
-
-    if (firstCharacter === '<' && lastCharacter === '>') return this.packetType.XML;
-    if (firstCharacter === '%' && lastCharacter === '%') return this.packetType.XT;
-    if (firstCharacter === '{' && lastCharacter === '}') return this.packetType.JSON;
-    return this.packetType.UNDEFINED;
-  }
-
-  /**
    * Handles incoming  packets and fires the events
    * @param {number} type Incoming/outgoing type
    * @param {string} packet Outgoing packet
