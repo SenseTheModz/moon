@@ -44,6 +44,30 @@ class Room {
   }
 
   /**
+   * Updates player data by key
+   * @param {any} key Player key to check for
+   * @param {any} value Data to add
+   */
+  updatePlayerDataByKey(key, value) {
+    this.players.set(key, value);
+  }
+
+  /**
+   * Find Player by username
+   * @param {Client} client Client instance
+   * @param {string} username Username of the player
+   * @returns {any}
+   * @public
+   */
+  findPlayerByUsername(client, username) {
+    for (const player of client.player.room.players.values()) {
+      const playerUsername = player.name === undefined ? player.uoName : player.name;
+      if (playerUsername.toLowerCase() === username.toLowerCase()) return player;
+    }
+    return null;
+  }
+
+  /**
    * Clears all players from the room
    * @public
    */

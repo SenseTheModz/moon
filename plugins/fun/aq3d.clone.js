@@ -27,7 +27,7 @@ class Clone extends Plugin {
   clone(client, username) {
     if (!username) return null;
 
-    const player = this.findPlayerByUsername(client, username);
+    const player = client.player.room.findPlayerByUsername(client, username);
     if (player) {
       return client.localWrite({
         EntityID: client.player.id,
@@ -35,20 +35,6 @@ class Clone extends Plugin {
         type: 17,
         cmd: 16,
       });
-    }
-    return null;
-  }
-
-  /**
-   * Find Player by username
-   * @param {Client} client Client instance
-   * @param {string} username Username of the player
-   * @returns {any}
-   * @public
-   */
-  findPlayerByUsername(client, username) {
-    for (const player of client.player.room.players.values()) {
-      if (player.name.toLowerCase() === username.toLowerCase()) return player;
     }
     return null;
   }

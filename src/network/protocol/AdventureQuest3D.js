@@ -18,6 +18,7 @@ class AdventureQuest3D extends Protocol {
      */
     this.regsiterRemoteHandler(ADVENTUREQUEST_3D_PACKETS.AREA, require('./handlers/aq3d/remote/Area'));
     this.regsiterRemoteHandler(ADVENTUREQUEST_3D_PACKETS.CELL, require('./handlers/aq3d/remote/Cell'));
+    this.regsiterRemoteHandler(ADVENTUREQUEST_3D_PACKETS.MOVE, require('./handlers/aq3d/remote/Move'));
   }
 
   /**
