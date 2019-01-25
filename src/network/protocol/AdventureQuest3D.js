@@ -54,7 +54,7 @@ class AdventureQuest3D extends Protocol {
         const toPacket = packet instanceof Packet ? packet.toPacket() : JSON.stringify(packet);
         if (this.client.server.debug) this.logger.info(`[Client] ${toPacket}`, { server: this.client.server.name });
 
-        const bufferPacket = this._toBufferPacket(toPacket, packet.type, packet.cmd);
+        const bufferPacket = this._createPacket(toPacket, packet.type, packet.cmd);
         await this.client.remote.write(bufferPacket);
       } catch (error) {
         this.logger.error(`Remote send failed! Reason: ${error.message}`, { server: this.client.server.name });
@@ -74,7 +74,7 @@ class AdventureQuest3D extends Protocol {
         const toPacket = packet instanceof Packet ? packet.toPacket() : JSON.stringify(packet);
         if (this.client.server.debug) this.logger.info(`[Remote] ${toPacket}`, { server: this.client.server.name });
 
-        const bufferPacket = this._toBufferPacket(toPacket, packet.type, packet.cmd);
+        const bufferPacket = this._createPacket(toPacket, packet.type, packet.cmd);
         await this.client.socket.write(bufferPacket);
       } catch (error) {
         this.logger.error(`Local send failed! Reason: ${error.message}`, { server: this.client.server.name });
@@ -90,7 +90,7 @@ class AdventureQuest3D extends Protocol {
    * @returns {Buffer}
    * @private
    */
-  _toBufferPacket(packet, type = 255, cmd = 255) {
+  _createPacket(packet, type = 255, cmd = 255) {
     packet = Buffer.from(packet);
     const array = Buffer.alloc(packet.length + 3);
     array[0] = type;

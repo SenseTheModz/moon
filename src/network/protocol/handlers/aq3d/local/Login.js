@@ -2,7 +2,7 @@ const Handler = require('../../');
 
 class Login extends Handler {
   handle(packet) {
-    this.client.constructPlayer(packet.object);
+    return this.client.constructPlayer(packet.object);
   }
 }
 
