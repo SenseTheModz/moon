@@ -7,7 +7,7 @@ class Gold extends Plugin {
       commands: [
         {
           name: 'gold',
-          description: 'Sets your gold amount (client side)',
+          description: 'Sets your gold amount (client-side)',
           execute: ({ client, parameters }) => {
             const [gold] = parameters;
             return this.gold(client, gold);
