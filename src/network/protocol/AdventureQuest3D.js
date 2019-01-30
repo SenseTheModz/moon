@@ -109,7 +109,7 @@ class AdventureQuest3D extends Protocol {
    * @returns {Promise<void>}
    */
   message(message) {
-    return this._client.remoteWrite({
+    return this.client.remoteWrite({
       msg: message,
       channelID: this.client.player.channel,
       type: 4,

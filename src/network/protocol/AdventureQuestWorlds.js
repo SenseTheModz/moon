@@ -113,7 +113,7 @@ class AdventureQuestWorlds extends Protocol {
    * @returns {Promise<void>}
    */
   message(message) {
-    return this._client.remoteWrite(`%xt%zm%message%1%${message}%zone%`);
+    return this.client.remoteWrite(`%xt%zm%message%1%${message}%zone%`);
   }
 
   /**
