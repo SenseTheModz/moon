@@ -31,11 +31,28 @@ class Player {
     this.token = token;
 
     /**
+     * Chat channel for AdventureQuest 3D
+     * @type {number}
+     * @public
+     */
+    this.channel = null;
+
+    /**
      * Player room
      * @type {Room}
      * @public
      */
     this.room = new Room();
+  }
+
+  /**
+   * Sends a message to the server
+   * @param {string} message Message to send
+   * @returns {Promise<void>}
+   * @public
+   */
+  message(message) {
+    return this._client.protocol.message(message);
   }
 }
 

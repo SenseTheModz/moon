@@ -125,7 +125,7 @@ class Client {
    * @public
    */
   commandNotFound(command) {
-    return this.serverWarningMessage(`Command ${command} not found!`);
+    return this.warning(`Command ${command} not found!`);
   }
 
   /**
@@ -134,12 +134,8 @@ class Client {
    * @returns {Promise<void>}
    * @public
    */
-  serverWarningMessage(message) {
-    if (this.server.protocol === PROTOCOL_TYPE.AQW) {
-      return this.localWrite(`%xt%warning%-1%${message}%`);
-    } else {
-      return this.localWrite({ sender: 'SERVER', msg: `[FF0000][Warning][-] [D3D3D3]${message}[-]`, type: 4, cmd: 1 });
-    }
+  warning(message) {
+    return this.protocol.warning(message);
   }
 
 
@@ -149,12 +145,8 @@ class Client {
    * @returns {Promise<void>}
    * @public
    */
-  serverMessage(message) {
-    if (this.server.protocol === PROTOCOL_TYPE.AQW) {
-      return this.localWrite(`%xt%server%-1%${message}%`);
-    } else {
-      return this.localWrite({ sender: 'SERVER', msg: `[59f7f9][Server][-] [D3D3D3]${message}[-]`, type: 4, cmd: 1 });
-    }
+  message(message) {
+    return this.protocol.message(message);
   }
 
   /**

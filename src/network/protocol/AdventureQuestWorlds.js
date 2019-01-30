@@ -106,6 +106,25 @@ class AdventureQuestWorlds extends Protocol {
     if (firstCharacter === '{' && lastCharacter === '}') return this.packetType.JSON;
     return this.packetType.UNDEFINED;
   }
+
+  /**
+   * Sends a message to the server
+   * @param {string} message Message to send
+   * @returns {Promise<void>}
+   */
+  message(message) {
+    return this._client.remoteWrite(`%xt%zm%message%1%${message}%zone%`);
+  }
+
+  /**
+   * Sends a server warning message to the client
+   * @param {string} message Message to send
+   * @returns {Promise<void>}
+   * @public
+   */
+  warning(message) {
+    return this.client.localWrite(`%xt%warning%-1%${message}%`);
+  }
 }
 
 module.exports = AdventureQuestWorlds;

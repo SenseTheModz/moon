@@ -145,7 +145,8 @@ class PluginManager {
    * @private
    */
   _registerhook(hook) {
-    if (typeof hook.packet !== 'string') throw new Error('Hook type must be a typeof string');
+    // eslint-disable-next-line max-len
+    if (typeof hook.packet !== 'string' && typeof hook.packet !== 'number') throw new Error('Hook type must be a typeof string or number');
     if (typeof hook.type !== 'string') throw new Error('Hook type must be a typeof string');
     if (typeof hook.execute !== 'function') throw new Error('Hook execute callback must be a typeof function');
 

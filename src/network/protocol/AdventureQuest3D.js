@@ -19,6 +19,7 @@ class AdventureQuest3D extends Protocol {
     this.regsiterRemoteHandler(ADVENTUREQUEST_3D_PACKETS.AREA, require('./handlers/aq3d/remote/Area'));
     this.regsiterRemoteHandler(ADVENTUREQUEST_3D_PACKETS.CELL, require('./handlers/aq3d/remote/Cell'));
     this.regsiterRemoteHandler(ADVENTUREQUEST_3D_PACKETS.MOVE, require('./handlers/aq3d/remote/Move'));
+    this.regsiterRemoteHandler(ADVENTUREQUEST_3D_PACKETS.CHANNEL, require('./handlers/aq3d/remote/Channel'));
   }
 
   /**
@@ -100,6 +101,35 @@ class AdventureQuest3D extends Protocol {
     xor(array);
     array[packet.length + 2] = 0;
     return array;
+  }
+
+  /**
+   * Sends a message to the server
+   * @param {string} message Message to send
+   * @returns {Promise<void>}
+   */
+  message(message) {
+    return this._client.remoteWrite({
+      msg: message,
+      channelID: this.client.player.channel,
+      type: 4,
+      cmd: 1,
+    });
+  }
+
+  /**
+   * Sends a server warning message to the client
+   * @param {string} message Message to send
+   * @returns {Promise<void>}
+   * @public
+   */
+  warning(message) {
+    return this.client.localWrite({
+      sender: 'SERVER',
+      msg: `[FF0000][Warning][-] [D3D3D3]${message}[-]`,
+      type: 4,
+      cmd: 1,
+    });
   }
 }
 
